@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Microsoft.Extensions.Configuration;
@@ -12,6 +12,13 @@ namespace DotnetIOC_ConfigSamples
         {
             IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
             configurationBuilder.AddJsonFile("AppSetting.json", false, true);
+            configurationBuilder.AddInMemoryCollection(new Dictionary<string, string> {
+                { "Memory:User:Name", "jack" },
+                { "Memory:User:Age", "18" },
+            });
+            configurationBuilder.AddCommandLine(args);
+            configurationBuilder.AddEnvironmentVariables();
+
             IConfiguration configuration = configurationBuilder.Build();
 
             IServiceCollection serviceCollection = new ServiceCollection();
@@ -20,12 +27,34 @@ namespace DotnetIOC_ConfigSamples
             serviceCollection.AddScoped<B>();
 
             IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
-            B b = serviceProvider.GetRequiredService<B>();
+            //B b = serviceProvider.GetRequiredService<B>();
             //b.Show();
             //b.Show2();
-            b.Show3();
+            //b.Show3();
+
+            Show(serviceProvider);
 
             Console.WriteLine("Hello World!");
+        }
+
+        static void Show(IServiceProvider serviceProvider)
+        {
+            IConfiguration configuration = serviceProvider.GetRequiredService<IConfiguration>();
+
+            string[] connectionStrings = configuration.GetSection("ConnectionStrings").Get<string[]>();
+            Console.WriteLine(string.Join(", ", connectionStrings));
+            Console.WriteLine(configuration["a:b:c"]);
+
+            Console.WriteLine(configuration["Memory:User:Name"]);
+            Console.WriteLine(configuration["Memory:User:Age"]);
+
+            Console.WriteLine(configuration["CommandLineA"]);
+            Console.WriteLine(configuration["CommandLineB"]);
+            Console.WriteLine(configuration["CommandLineC"]);
+            Console.WriteLine(configuration["CommandLineA:B"]);
+
+            Console.WriteLine(configuration["EnvA"]);
+            Console.WriteLine(configuration["EnvB:B"]);
         }
     }
 

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "DotnetIOC_ConfigSamples": {
+      "commandName": "Project",
+      "commandLineArgs": "CommandLineA=a /CommandLineB=b --CommandLineC=c CommandLineA:B=c",
+      "environmentVariables": {
+        "EnvA": "a",
+        "EnvB:B": "B"
+      }
+    }
+  }
+}
