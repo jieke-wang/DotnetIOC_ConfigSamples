@@ -55,6 +55,7 @@ namespace DotnetIOC_ConfigSamples
 
             Console.WriteLine(configuration["EnvA"]);
             Console.WriteLine(configuration["EnvB:B"]);
+            Console.WriteLine(configuration["env_file"]);
         }
     }
 
@@ -148,3 +149,6 @@ namespace DotnetIOC_ConfigSamples
     }
 
 }
+
+// webBuilder.UseSetting(WebHostDefaults.HostingStartupAssembliesKey, "dll文件");
+// webBuilder.UseSetting(WebHostDefaults.HostingStartupAssembliesKey, "");
