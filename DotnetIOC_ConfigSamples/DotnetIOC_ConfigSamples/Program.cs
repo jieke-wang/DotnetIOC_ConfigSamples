@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,8 @@ namespace DotnetIOC_ConfigSamples
     {
         static void Main(string[] args)
         {
+            DotEnv.Load(Path.Combine(Directory.GetCurrentDirectory(), ".env"));
+
             IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
             configurationBuilder.AddJsonFile("AppSetting.json", false, true);
             configurationBuilder.AddInMemoryCollection(new Dictionary<string, string> {
