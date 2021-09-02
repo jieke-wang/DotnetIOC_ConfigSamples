@@ -19,6 +19,12 @@ namespace DotnetIOC_ConfigSamples
                 { "Memory:User:Name", "jack" },
                 { "Memory:User:Age", "18" },
             });
+            
+            // 命令行支持的命令格式如下:
+            // key=value
+            // --key=value 或 --key value
+            // /key=value 或 /key value
+            // PS:等号格式与空格格式不能混用
             configurationBuilder.AddCommandLine(args);
             configurationBuilder.AddEnvironmentVariables();
 
